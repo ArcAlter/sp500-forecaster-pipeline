@@ -1,0 +1,22 @@
+artifact_path: file:///c:/Users/User/Documents/GitHub/sp500-forecaster-pipeline/backend/mlruns/0/models/m-adc97e9c624d456096cb716d4db3ec08/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.11.15
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBRegressor
+    model_format: ubj
+    xgb_version: 3.2.0
+mlflow_version: 3.12.0
+model_id: m-adc97e9c624d456096cb716d4db3ec08
+model_size_bytes: 683387
+model_uuid: m-adc97e9c624d456096cb716d4db3ec08
+prompts: null
+run_id: be699ceba4b04434b2c6b84cb8252bfa
+utc_time_created: '2026-05-09 15:30:43.786033'
