@@ -3,7 +3,9 @@ import numpy as np
 import mlflow
 import os
 from xgboost import XGBRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, mean_absolute_percentage_error
+
+model_name = "axu_xgboost_model"
 
 def train():
     # โหลดข้อมูล
@@ -23,16 +25,22 @@ def train():
         y_pred = model.predict(X_test)
 
         # คำนวณ Metrics
+        mape = mean_absolute_percentage_error(y_test, y_pred)
         rmse = np.sqrt(mean_squared_error(y_test, y_pred))
         mae = mean_absolute_error(y_test, y_pred)
         r2 = r2_score(y_test, y_pred)
 
         # Logging
         mlflow.log_params(model.get_params())
-        mlflow.log_metrics({"rmse": rmse, "mae": mae, "r2": r2})
-        mlflow.xgboost.log_model(model, "model")
+        mlflow.log_metrics({"rmse": rmse, "mape": mape, "mae": mae, "r2": r2})
+        mlflow.xgboost.log_model(
+        xgb_model=model,
+        artifact_path="model",
+        registered_model_name=model_name  # เพิ่มบรรทัดนี้เพื่อ Register
+        )
         
         print(f"Training finished. RMSE: {rmse:.4f}")
+        print(f"Model registered as: {model_name}")
 
 if __name__ == "__main__":
     train()
